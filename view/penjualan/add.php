@@ -28,22 +28,24 @@
                         <br>
                         <br>
                           <label>tanggal</label><br/>
-                              <input type="date" name="tanggal" class="input">
+                              <input type="date" name="tanggal" class="input" required>
                           <br/>
                           <label>Kode Barang</label><br/>
-                              <select name="kd_barang" class="select">
-                                  <option value="A001-Hexetidine">A001-Hexetidine</option>
-                                  <option value="A002-Benorilate">A002-Benorilate</option>
-                                  <option value="A003-Klindamisin">A003-Klindamisin</option>
-                                  <option value="A004-Alopurinol">A004-Alopurinol</option>
-                                  <option value="A005-Orsiprenalin">A005-Orsiprenalin</option>
+                              <select name="kd_barang" class="select" required>
+                                  <option value="" selected disabled>Pilih Kode Barang</option>
+                                  <?php
+                                  $query = mysqli_query($connect, "SELECT kd_barang, jml_barang, id_barang, tgl_kdl FROM barang WHERE jml_barang > 0 ORDER BY kd_barang ASC");
+                                  while ($data = mysqli_fetch_array($query)) {
+                                  ?>
+                                  <option value="<?= $data['id_barang']; ?>"><?= $data['kd_barang']; ?> (sisa : <?= $data['jml_barang']; ?>, expire: <?= $data['tgl_kdl']; ?>)</option>
+                                  <?php } ?>
                               </select>
                           <br/>
                           <label>Jumlah</label><br/>
-                              <input type="text" name="jml_barang" class="input">
+                              <input type="number" name="jml_barang" class="input" required>
                           <br/>
                           <label>Harga</label><br/>
-                              <input type="text" name="harga_barang" class="input">
+                              <input type="number" name="harga_barang" class="input" required>
                           <br/>
                     </td>
                 </tr>

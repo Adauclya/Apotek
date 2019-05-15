@@ -6,7 +6,7 @@
   $kd_penjualan = $_GET['kd_penjualan'];
 
   //query
-  $query =  $connect->query("SELECT * FROM penjualan WHERE kd_penjualan ='$kd_penjualan'");
+  $query =  $connect->query("SELECT p.*, b.kd_barang FROM penjualan p, barang b WHERE p.kd_penjualan ='".$kd_penjualan."'");
   $result = $query->fetch_assoc();
  ?>
 
@@ -43,12 +43,12 @@
                           <br/>
                           <label>Kode Barang</label><br/>
                               <select name="kd_barang" class="select">
-                                  <option value="<?php echo $result['kd_barang']?>" selected hidden><?php echo $result['kd_barang']?></option>
-                                  <option value="A001-Hexetidine">A001-Hexetidine</option>
-                                  <option value="A002-Benorilate">A002-Benorilate</option>
-                                  <option value="A003-Klindamisin">A003-Klindamisin</option>
-                                  <option value="A004-Alopurinol">A004-Alopurinol</option>
-                                  <option value="A005-Orsiprenalin">A005-Orsiprenalin</option>
+                                  <?php
+                                  $query = mysqli_query($connect, "SELECT kd_barang, jml_barang, id_barang, tgl_kdl FROM barang WHERE jml_barang > 0 ORDER BY kd_barang ASC");
+                                  while ($data = mysqli_fetch_array($query)) {
+                                  ?>
+                                  <option value="<?= $data['id_barang']; ?>" <?php if ($result['id_barang'] == $data['id_barang']) { echo "selected"; } ?>><?= $data['kd_barang']; ?></option>
+                                  <?php } ?>
                               </select>
                           <br/>
                           <label>Jumlah</label><br/>

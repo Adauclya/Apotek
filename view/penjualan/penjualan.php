@@ -77,9 +77,9 @@
 					include "../../controllers/koneksi.php";
 					if (isset($_POST['search'])) {
 						$cari = $_POST['cari'];
-						$query_mysql = $connect->query("SELECT * FROM penjualan WHERE tanggal LIKE '%$cari%' or kd_penjualan LIKE '%$cari%' or kd_barang LIKE '%$cari%' ORDER BY tanggal ASC");
+						$query_mysql = $connect->query("SELECT p.*, b.kd_barang FROM penjualan p, barang b WHERE tanggal LIKE '%$cari%' or kd_penjualan LIKE '%$cari%' or kd_barang LIKE '%$cari%' ORDER BY tanggal ASC");
 					}else{
-						$query_mysql = $connect->query("SELECT * FROM penjualan WHERE tanggal ORDER BY tanggal ASC")or die(mysql_error());
+						$query_mysql = $connect->query("SELECT p.*, b.kd_barang FROM penjualan p, barang b WHERE p.id_barang=b.id_barang ORDER BY tanggal ASC")or die(mysql_error());
 					}
 					$nomor = 1;
 					$tharga = 0;
